@@ -1,0 +1,5 @@
+@model ErrorViewModel
+@{ ViewData["Title"] = "Error"; }
+<section class="container section"><h2>Error</h2>
+@if (Model.ShowRequestId) { <p>Request ID: @Model.RequestId</p> }
+</section>

@@ -1,0 +1,27 @@
+@model List<Product>
+@using System.Globalization
+@{
+    var uk = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "uk";
+}
+<aside class="featured-vc" style="margin:1.5rem 0;">
+    <h3 style="font-family:var(--font);font-size:1.35rem;margin-bottom:1rem;">
+        @(uk ? "Підбірка від Bloom" : "Bloom picks")
+    </h3>
+    <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;">
+        @foreach (var p in Model)
+        {
+            <article class="card" style="margin:0;">
+                <div class="card-media" style="height:120px;font-size:2.5rem;">@p.Emoji</div>
+                <div class="card-body" style="padding:.85rem;">
+                    <div class="card-cat">@p.Category</div>
+                    <div class="card-title" style="font-size:1.1rem;">@(uk ? p.NameUk : p.NameEn)</div>
+                    <div class="card-price">@p.Price.ToString("0") ₴</div>
+                    <a asp-controller="Catalog" asp-action="Details" asp-route-id="@p.Id"
+                       class="btn btn-ghost" style="margin-top:.5rem;padding:6px 12px;font-size:.8rem;">
+                        @(uk ? "Детальніше" : "View")
+                    </a>
+                </div>
+            </article>
+        }
+    </div>
+</aside>

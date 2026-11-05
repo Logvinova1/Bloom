@@ -1,0 +1,18 @@
+@model Product
+@{
+    var uk = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "uk";
+    ViewData["Title"] = uk ? Model.NameUk : Model.NameEn;
+}
+<section class="container section" style="padding-top:2.5rem;max-width:720px;">
+    <p style="margin-bottom:1rem;"><a asp-action="Index" style="color:var(--accent);">← @L["Nav_Catalog"]</a></p>
+    <div class="card" style="display:grid;grid-template-columns:1fr 1.2fr;">
+        <div class="card-media" style="height:100%;min-height:260px;font-size:5rem;">@Model.Emoji</div>
+        <div class="card-body" style="padding:2rem;">
+            <div class="card-cat">@Model.Category · @Model.Color</div>
+            <h1 class="card-title" style="font-size:2rem;">@(uk ? Model.NameUk : Model.NameEn)</h1>
+            <p style="color:var(--muted);margin:1rem 0;">@(uk ? Model.DescriptionUk : Model.DescriptionEn)</p>
+            <div class="card-price" style="font-size:1.35rem;">@Model.Price.ToString("0") ₴</div>
+            <a class="btn btn-primary" style="margin-top:1.25rem;" asp-controller="Contact" asp-action="Index">@L["Hero_Contact"]</a>
+        </div>
+    </div>
+</section>

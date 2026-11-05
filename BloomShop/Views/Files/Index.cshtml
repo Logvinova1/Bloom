@@ -1,0 +1,39 @@
+@model FileUploadViewModel
+@{
+    ViewData["Title"] = L["Nav_Files"].Value;
+    var files = ViewBag.Files as List<FileItemViewModel> ?? new();
+}
+<section class="container section" style="padding-top:2.5rem;">
+    <h2>@L["Files_Title"]</h2>
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert-ok">✓ Uploaded</div>
+    }
+    <div class="panel" style="margin-bottom:2rem;">
+        <h3 style="font-family:var(--font);margin-bottom:1rem;">@L["Files_Upload"]</h3>
+        <form asp-action="Upload" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="All" class="alert-err"></div>
+            <div class="form-group">
+                <input asp-for="File" type="file" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary">@L["Files_Button"]</button>
+        </form>
+    </div>
+    <div style="display:grid;gap:10px;">
+        @foreach (var f in files)
+        {
+            <div class="panel" style="display:flex;justify-content:space-between;align-items:center;max-width:none;padding:1rem 1.25rem;">
+                <div>
+                    <strong>@f.Name</strong>
+                    <div style="color:var(--muted);font-size:.85rem;">@f.SizeDisplay · @f.UploadedAt.ToString("g")</div>
+                </div>
+                <a class="btn btn-ghost" style="padding:8px 14px;" asp-action="View" asp-route-name="@f.Name">@L["Btn_Details"]</a>
+            </div>
+        }
+        @if (files.Count == 0)
+        {
+            <p style="color:var(--muted);">—</p>
+        }
+    </div>
+</section>

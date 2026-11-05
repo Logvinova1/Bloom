@@ -1,0 +1,25 @@
+@model FileItemViewModel
+@{
+    ViewData["Title"] = Model.Name;
+    var isImage = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" }.Contains(Model.Extension, StringComparer.OrdinalIgnoreCase);
+    var text = ViewBag.TextContent as string;
+}
+<section class="container section" style="padding-top:2.5rem;max-width:800px;">
+    <p style="margin-bottom:1rem;"><a asp-action="Index" style="color:var(--accent);">← @L["Nav_Files"]</a></p>
+    <h2 style="font-family:var(--font);">@Model.Name</h2>
+    <p style="color:var(--muted);margin-bottom:1.25rem;">@Model.SizeDisplay · @Model.UploadedAt.ToString("g")</p>
+    <div class="panel" style="max-width:none;">
+        @if (isImage)
+        {
+            <img src="@Model.RelativePath" alt="@Model.Name" style="border-radius:12px;max-height:70vh;margin:0 auto;" />
+        }
+        else if (text != null)
+        {
+            <pre style="white-space:pre-wrap;">@text</pre>
+        }
+        else
+        {
+            <a class="btn btn-primary" href="@Model.RelativePath" target="_blank">Open / Download</a>
+        }
+    </div>
+</section>

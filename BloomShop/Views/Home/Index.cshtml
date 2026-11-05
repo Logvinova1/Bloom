@@ -1,0 +1,40 @@
+@{
+    ViewData["Title"] = L["Nav_Home"].Value;
+    var uk = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "uk";
+    var featured = ProductCatalog.All.Take(3).ToList();
+}
+<section class="container hero">
+    <div>
+        <span class="hero-tag">@L["Hero_Tag"]</span>
+        <h1>@L["Hero_Title"]</h1>
+        <p>@L["Hero_Text"]</p>
+        <div class="hero-actions">
+            <a class="btn btn-primary" asp-controller="Catalog" asp-action="Index">@L["Hero_Shop"]</a>
+            <a class="btn btn-ghost" asp-controller="Contact" asp-action="Index">@L["Hero_Contact"]</a>
+        </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">🌸</div>
+</section>
+
+<section class="container section">
+    <h2>@L["Section_Featured"]</h2>
+    <div class="grid">
+        @foreach (var p in featured)
+        {
+            <article class="card">
+                <div class="card-media">@p.Emoji</div>
+                <div class="card-body">
+                    <div class="card-cat">@p.Category</div>
+                    <h3 class="card-title">@(uk ? p.NameUk : p.NameEn)</h3>
+                    <div class="card-price">@p.Price.ToString("0") ₴</div>
+                    <a asp-controller="Catalog" asp-action="Details" asp-route-id="@p.Id" class="btn btn-ghost" style="margin-top:.75rem;padding:8px 14px;font-size:.85rem;">@L["Btn_Details"]</a>
+                </div>
+            </article>
+        }
+    </div>
+</section>
+
+@* Lab 6: ViewComponent *@
+<section class="container section" style="padding-top:0;">
+    @await Component.InvokeAsync("FeaturedProducts", new { count = 3 })
+</section>

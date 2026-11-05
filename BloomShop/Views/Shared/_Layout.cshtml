@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] — Bloom</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+<header class="site-header">
+    <div class="container nav">
+        <a class="logo" asp-controller="Home" asp-action="Index">Bloom</a>
+        <ul class="nav-links">
+            <li><a asp-controller="Home" asp-action="Index" class="@(ViewContext.RouteData.Values["Controller"]?.ToString()=="Home"?"active":"")">@L["Nav_Home"]</a></li>
+            <li><a asp-controller="Catalog" asp-action="Index" class="@(ViewContext.RouteData.Values["Controller"]?.ToString()=="Catalog"?"active":"")">@L["Nav_Catalog"]</a></li>
+            <li><a asp-controller="Contact" asp-action="Index" class="@(ViewContext.RouteData.Values["Controller"]?.ToString()=="Contact"?"active":"")">@L["Nav_Contact"]</a></li>
+            <li><a asp-controller="Files" asp-action="Index" class="@(ViewContext.RouteData.Values["Controller"]?.ToString()=="Files"?"active":"")">@L["Nav_Files"]</a></li>
+        </ul>
+        <div class="nav-right">
+            <partial name="_LanguageSwitcher" />
+        </div>
+    </div>
+</header>
+<main>
+    @RenderBody()
+</main>
+<footer class="site-footer">
+    <div class="container">© @DateTime.Now.Year Bloom — @L["Footer_Text"]</div>
+</footer>
+<script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

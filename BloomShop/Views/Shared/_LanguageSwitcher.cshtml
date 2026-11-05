@@ -1,0 +1,13 @@
+@using Microsoft.AspNetCore.Localization
+@{
+    var feature = Context.Features.Get<IRequestCultureFeature>();
+    var current = feature?.RequestCulture.UICulture.TwoLetterISOLanguageName ?? "en";
+    var returnUrl = $"~{Context.Request.Path}{Context.Request.QueryString}";
+}
+<div class="lang">
+    <form asp-controller="Home" asp-action="SetLanguage" method="post">
+        <input type="hidden" name="returnUrl" value="@returnUrl" />
+        <button type="submit" name="culture" value="en" class="@(current=="en"?"on":"")">EN</button>
+        <button type="submit" name="culture" value="uk" class="@(current=="uk"?"on":"")">UA</button>
+    </form>
+</div>
